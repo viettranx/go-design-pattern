@@ -78,7 +78,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if account.GetBalance() != product.Price {
+	if account.GetBalance() < product.Price {
 		log.Fatal("not enough balance")
 	}
 
