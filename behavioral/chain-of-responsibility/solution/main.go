@@ -43,7 +43,7 @@ type HandlerNode struct {
 func (node *HandlerNode) Handle(url string) error {
 	ctx := Context{url: url}
 
-	if node.hdl == nil {
+	if node == nil || node.hdl == nil {
 		return nil
 	}
 
@@ -51,16 +51,18 @@ func (node *HandlerNode) Handle(url string) error {
 		return err
 	}
 
-	nextNode := node.next
-	for nextNode != nil {
-		if err := nextNode.hdl(&ctx); err != nil {
-			return err
-		}
+	return node.next.Handle(url)
 
-		nextNode = nextNode.next
-	}
-
-	return nil
+	//nextNode := node.next
+	//for nextNode != nil {
+	//	if err := nextNode.hdl(&ctx); err != nil {
+	//		return err
+	//	}
+	//
+	//	nextNode = nextNode.next
+	//}
+	//
+	//return nil
 }
 
 func NewCrawler(handlers ...Handler) HandlerNode {
