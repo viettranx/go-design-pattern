@@ -19,7 +19,7 @@ func main() {
 	// Demo 1000 requests to service at a same time (1000 RPS)
 	// I made this code for simple demo, not a real practice!
 
-	rps := 100
+	rps := 1000
 	wg := sync.WaitGroup{}
 	wg.Add(rps)
 
