@@ -50,7 +50,7 @@ func main() {
 
 	n1.Children[0].X = 10
 
-	fmt.Println(n1, n2) // now n2 is `deep copy` from n1
+	fmt.Println(n1.Children[0].X, n2.Children[0].X) // now n2 is `deep copy` from n1
 }
 
 // Another example with a `value object` (ex: Color)

@@ -16,7 +16,7 @@ func main() {
 	p2 := p1
 
 	p1.X = 3
-	fmt.Println(p1, p2) // p2 copy from p1
+	fmt.Println(p1.X, p2.X) // p2 copy from p1
 
 	n1 := Node{
 		Value: p1,
@@ -30,5 +30,5 @@ func main() {
 
 	n1.Children[0].X = 10
 
-	fmt.Println(n1, n2) // n2 has `children` reference to n1. So n2 is `shallow copy`.
+	fmt.Println(n1.Children[0].X, n2.Children[0].X) // n2 has `children` reference to n1. So n2 is `shallow copy`.
 }
