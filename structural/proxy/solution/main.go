@@ -22,7 +22,7 @@ type ProxyDataStorage struct {
 	realStorage DataStorage
 }
 
-func (s ProxyDataStorage) GetValue() int {
+func (s *ProxyDataStorage) GetValue() int {
 	// I would like to ignore data racing issue here to keep it simple
 	if val := s.cachedValue; val != nil {
 		return *val
@@ -34,8 +34,8 @@ func (s ProxyDataStorage) GetValue() int {
 	return val
 }
 
-func NewProxyDataStorage(realStorage DataStorage) ProxyDataStorage {
-	return ProxyDataStorage{realStorage: realStorage}
+func NewProxyDataStorage(realStorage RealDataStorage) DataStorage {
+	return &ProxyDataStorage{realStorage: realStorage}
 }
 
 type ValueService struct {
@@ -47,13 +47,13 @@ func (s ValueService) FetchValue() int {
 }
 
 func main() {
-	value := ValueService{
+	vs := ValueService{
 		storage: NewProxyDataStorage(RealDataStorage{}),
-	}.FetchValue()
+	}
 
 	// It's too low at the first time
-	fmt.Println(value)
+	fmt.Println(vs.FetchValue())
 
 	// Now it return instantly because of caching (proxy layer)
-	fmt.Println(value)
+	fmt.Println(vs.FetchValue())
 }
