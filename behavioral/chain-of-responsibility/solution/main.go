@@ -40,18 +40,17 @@ type HandlerNode struct {
 	next *HandlerNode
 }
 
-func (node *HandlerNode) Handle(url string) error {
-	ctx := Context{url: url}
+func (node *HandlerNode) Handle(ctx *Context) error {
 
 	if node == nil || node.hdl == nil {
 		return nil
 	}
 
-	if err := node.hdl(&ctx); err != nil {
+	if err := node.hdl(ctx); err != nil {
 		return err
 	}
 
-	return node.next.Handle(url)
+	return node.next.Handle(ctx)
 
 	//nextNode := node.next
 	//for nextNode != nil {
@@ -87,7 +86,9 @@ type WebCrawler struct {
 }
 
 func (wc WebCrawler) Crawl(url string) {
-	if err := wc.handler.Handle(url); err != nil {
+	ctx := &Context{url: url}
+
+	if err := wc.handler.Handle(ctx); err != nil {
 		log.Println(err)
 	}
 }
